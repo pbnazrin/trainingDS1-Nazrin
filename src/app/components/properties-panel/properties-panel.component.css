@@ -1,0 +1,29 @@
+.properties-container{
+    width:250px;
+    height:96%;
+    border:solid black;
+    margin:10px;
+    padding-left:10px
+}
+.properties-header{
+    color: #1f1e1e;
+   
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {
+    background-color: rgb(65, 179, 228);
+}
+::ng-deep .mat-accent .mat-slider-track-fill{
+    background-color: black;
+}
+.color-container-stroke{
+    margin-left:15px;
+}
+.color-container-fill{
+    margin-left:35px;
+}
+span{
+  margin-left:20px  
+}

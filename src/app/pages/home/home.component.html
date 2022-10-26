@@ -1,1 +1,24 @@
-<p>home works!</p>
+<!-- <mat-sidenav-container>
+    <mat-sidenav>Start</mat-sidenav>
+    <mat-sidenav position="end">End</mat-sidenav>
+    <section>Main</section>
+  </mat-sidenav-container> -->
+<div class="container">
+  <app-header></app-header>
+  <mat-drawer-container class="app-container">
+    <mat-drawer mode="side" opened>
+        <app-object-palette></app-object-palette>
+    </mat-drawer>
+
+    <mat-drawer-content class="canvas-container">
+        <app-canvas></app-canvas>
+    </mat-drawer-content>
+    <mat-drawer-content >
+        <app-event-inspector></app-event-inspector>
+    </mat-drawer-content>
+    <!-- <mat-sidenav mode="side" position="end">Drawer content</mat-sidenav> -->
+    <mat-drawer mode="side" position="end" opened >
+        <app-properties-panel></app-properties-panel>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>
