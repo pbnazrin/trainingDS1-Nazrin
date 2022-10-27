@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatSliderModule} from '@angular/material/slider';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +14,8 @@ import { ObjectPaletteComponent } from './components/object-palette/object-palet
 import { CanvasComponent } from './components/canvas/canvas.component';
 import { EventInspectorComponent } from './components/event-inspector/event-inspector.component';
 import { PropertiesPanelComponent } from './components/properties-panel/properties-panel.component';
-import { HomeComponent } from './pages/home/home.component';
+
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { HomeComponent } from './pages/home/home.component';
     CanvasComponent,
     EventInspectorComponent,
     PropertiesPanelComponent,
-    HomeComponent
+
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +37,9 @@ import { HomeComponent } from './pages/home/home.component';
     MatSliderModule,
 
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
