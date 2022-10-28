@@ -29,21 +29,22 @@ export class ObjectPaletteComponent implements OnInit {
     console.log(this);
     //this.canvas = new fabric.Canvas('canvas', {});
     this.shape = new fabric.Rect({
-      left: 100,
-      top: 100,
+      left: this.canvas.width * Math.random(),
+      top: this.canvas.height * Math.random(),
       fill: 'transparent',
       width: 50,
       height: 50,
       stroke: '#000',
     });
+   
 
     this.canvas.add(this.shape);
   }
 
   triClickEvent() {
     this.shape = new fabric.Triangle({
-      left: 120,
-      top: 120,
+      left: this.canvas.width * Math.random(),
+      top: this.canvas.height * Math.random(),
       width: 100,
       height: 50,
       fill: 'transparent',
@@ -54,8 +55,8 @@ export class ObjectPaletteComponent implements OnInit {
   }
   circleClickEvent() {
     this.shape = new fabric.Circle({
-      left: 140,
-      top: 140,
+      left: this.canvas.width * Math.random(),
+      top: this.canvas.height * Math.random(),
       radius: 50,
       fill: 'transparent',
       height: 50,
