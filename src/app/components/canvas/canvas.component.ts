@@ -8,8 +8,7 @@ import { EventsService } from 'src/app/services/events.service';
   styleUrls: ['./canvas.component.css'],
 })
 export class CanvasComponent implements OnInit {
-  private log: any;
-  @Output() sender = new EventEmitter();
+
   canvas: any;
   constructor(
     protected canvasService: CanvasShapesServiceService,
