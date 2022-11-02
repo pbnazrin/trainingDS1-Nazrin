@@ -1,21 +1,23 @@
-.canvas-container{
-    width:100%;
-    height:95%;  
+.canvas-container {
+    width: 100%;
+    height: 95%;
 }
-.canvas-header{
-    margin:10px;
+
+.canvas-header {
+    margin: 10px;
     color: #1f1e1e;
-   
     font-size: 18px;
     font-weight: 400;
     letter-spacing: 0;
 }
-.mat-stroked-button{
-    display:flex;
-    justify-content: center;
-    align-items: center;   
-}
-.canvas-button-row{
+
+.mat-stroked-button {
     display: flex;
-    justify-content:center;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-button-row {
+    display: flex;
+    justify-content: center;
 }
