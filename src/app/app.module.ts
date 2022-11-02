@@ -17,7 +17,6 @@ import { PropertiesPanelComponent } from './components/properties-panel/properti
 
 import { HomePageComponent } from './pages/home-page/home-page.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +27,6 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     PropertiesPanelComponent,
 
     HomePageComponent,
-    
   ],
   imports: [
     BrowserModule,

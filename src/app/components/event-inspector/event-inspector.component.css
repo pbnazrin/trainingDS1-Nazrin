@@ -1,15 +1,12 @@
-.event-container{
-    height:18.5%;
-    border:solid #000;
-    padding-left:10px
+.event-container {
+    height: 18.5%;
+    border: solid #000;
+    padding-left: 10px
 }
-.event-header{
- 
-    
-        color: #1f1e1e;
-      
-        font-size: 18px;
-        font-weight: 400;
-        letter-spacing: 0;
-        
-    }
+
+.event-header {
+    color: #1f1e1e;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
