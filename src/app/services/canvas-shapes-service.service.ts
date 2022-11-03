@@ -1,15 +1,15 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class CanvasShapesServiceService {
-  public shape: any;
-  public canvas: any;
+  public shape: object = {};
+  public canvas :any;
 
-  addShapeTOCanvasEvent = new EventEmitter();
+  subject = new Subject<Object>();
 
   constructor() {}
 
@@ -22,7 +22,7 @@ export class CanvasShapesServiceService {
       height: 50,
       stroke: '#000',
     });
-    this.addShapeTOCanvasEvent.emit({ shape: this.shape, name: 'Rectangle' });
+    this.subject.next({ shape: this.shape, name: 'Rectangle' });
   }
 
   drawTriangle() {
@@ -34,7 +34,7 @@ export class CanvasShapesServiceService {
       fill: 'transparent',
       stroke: '#000',
     });
-    this.addShapeTOCanvasEvent.emit({ shape: this.shape, name: 'Triangle' });
+    this.subject.next({ shape: this.shape, name: 'Triangle' });
   }
 
   drawCircle() {
@@ -45,6 +45,10 @@ export class CanvasShapesServiceService {
       fill: 'transparent',
       stroke: '#000',
     });
-    this.addShapeTOCanvasEvent.emit({ shape: this.shape, name: 'Circle' });
+    this.subject.next({ shape: this.shape, name: 'Circle' });
+  }
+
+  drawShapeOnCanvas(): Observable<object> {
+    return this.subject.asObservable();
   }
 }
