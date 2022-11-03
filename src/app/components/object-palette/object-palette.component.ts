@@ -8,8 +8,6 @@ import { CanvasShapesServiceService } from 'src/app/services/canvas-shapes-servi
   styleUrls: ['./object-palette.component.css'],
 })
 export class ObjectPaletteComponent implements OnInit {
-  public shape: any;
-
   constructor(protected canvasService: CanvasShapesServiceService) {}
 
   ngOnInit() {}

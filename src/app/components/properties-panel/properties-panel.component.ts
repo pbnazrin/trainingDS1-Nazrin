@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./properties-panel.component.css']
 })
 export class PropertiesPanelComponent implements OnInit {
-color:any;
+
   constructor() { }
 
   ngOnInit(): void {
