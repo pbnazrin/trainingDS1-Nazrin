@@ -28,27 +28,36 @@ export class CanvasComponent implements OnInit, OnDestroy {
     this.$shapeSubs = this.canvasService
       .drawShapeOnCanvas()
       .subscribe((response: any) => {
-        this.canvas.add(response.shape);
+        this.canvas.add(response);
       });
 
+    let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
     this.canvas.on('object:added', (options) => {
       if (options.target) {
-        this.eventService.sendEvent('Added', options.target.type!);
+        this.eventService.sendEvent(
+          'Added ' + shapes[options.target.type as keyof typeof shapes]
+        );
       }
     });
     this.canvas.on('object:moving', (options) => {
       if (options.target) {
-        this.eventService.sendEvent('Translated', options.target.type!);
+        this.eventService.sendEvent(
+          'Translated ' + shapes[options.target.type as keyof typeof shapes]
+        );
       }
     });
     this.canvas.on('object:rotating', (options) => {
       if (options.target) {
-        this.eventService.sendEvent('Rotated', options.target.type!);
+        this.eventService.sendEvent(
+          'Rotated ' + shapes[options.target.type as keyof typeof shapes]
+        );
       }
     });
     this.canvas.on('object:scaling', (options) => {
       if (options.target) {
-        this.eventService.sendEvent('Scaled', options.target.type!);
+        this.eventService.sendEvent(
+          'Scaled ' + shapes[options.target.type as keyof typeof shapes]
+        );
       }
     });
   }

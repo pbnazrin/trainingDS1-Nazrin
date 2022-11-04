@@ -14,8 +14,8 @@ export class EventInspectorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.$eventSubs = this.eventService
       .receiveEvent()
-      .subscribe((response: any) => {
-        this.text = response.event + ' ' + response.shapeName;
+      .subscribe((response: string) => {
+        this.text = response;
       });
   }
 
