@@ -1,13 +1,17 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
-  addEvent = new EventEmitter();
-  public variable: any;
-  constructor() {}
-  newEvent(event: String, shapeName: String) {
-    this.addEvent.emit({ event, shapeName });
+  subject = new Subject<string>();
+
+  sendEvent(message: string) {
+    this.subject.next(message);
+  }
+
+  receiveEvent(): Observable<string> {
+    return this.subject.asObservable();
   }
 }

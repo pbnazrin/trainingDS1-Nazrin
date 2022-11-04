@@ -1,15 +1,22 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { CanvasShapesServiceService } from 'src/app/services/canvas-shapes-service.service';
 import { fabric } from 'fabric';
 import { EventsService } from 'src/app/services/events.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.css'],
 })
-export class CanvasComponent implements OnInit {
-
-  canvas: any;
+export class CanvasComponent implements OnInit, OnDestroy {
+  canvas!: fabric.Canvas;
+  $shapeSubs!: Subscription;
   constructor(
     protected canvasService: CanvasShapesServiceService,
     protected eventService: EventsService
@@ -18,20 +25,34 @@ export class CanvasComponent implements OnInit {
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
     this.canvasService.canvas = this.canvas;
-    this.canvasService.addShapeTOCanvasEvent.subscribe((response: any) => {
-      response.shape.on('added', () => {
-        this.eventService.newEvent('Added', response.name);
+    this.$shapeSubs = this.canvasService
+      .drawShapeOnCanvas()
+      .subscribe((response: any) => {
+        this.canvas.add(response.shape);
       });
-      this.canvas.add(response.shape);
-      response.shape.on('scaling', () => {
-        this.eventService.newEvent('Scaled', response.name);
-      });
-      response.shape.on('moving', () => {
-        this.eventService.newEvent('Translated', response.name);
-      });
-      response.shape.on('rotating', () => {
-        this.eventService.newEvent('Rotated', response.name);
-      });
+
+    this.canvas.on('object:added', (options) => {
+      if (options.target) {
+        this.eventService.sendEvent('Added', options.target.type!);
+      }
     });
+    this.canvas.on('object:moving', (options) => {
+      if (options.target) {
+        this.eventService.sendEvent('Translated', options.target.type!);
+      }
+    });
+    this.canvas.on('object:rotating', (options) => {
+      if (options.target) {
+        this.eventService.sendEvent('Rotated', options.target.type!);
+      }
+    });
+    this.canvas.on('object:scaling', (options) => {
+      if (options.target) {
+        this.eventService.sendEvent('Scaled', options.target.type!);
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.$shapeSubs.unsubscribe();
   }
 }
