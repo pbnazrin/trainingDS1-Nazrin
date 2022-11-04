@@ -5,17 +5,13 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EventsService {
-  subject = new Subject<Object>();
+  subject = new Subject<string>();
 
-  sendEvent(event: String, shapeName: String) {
-    if (shapeName == 'rect') {
-      shapeName = 'rectangle';
-    }
-    this.subject.next({ event, shapeName });
+  sendEvent(message: string) {
+    this.subject.next(message);
   }
 
-  receiveEvent(): Observable<object> {
-    console.log(typeof this.subject.asObservable);
+  receiveEvent(): Observable<string> {
     return this.subject.asObservable();
   }
 }
