@@ -8,11 +8,11 @@ import { Subscription } from 'rxjs';
 })
 export class EventInspectorComponent implements OnInit, OnDestroy {
   text: string = '';
-  $eventSubs!: Subscription;
+  eventSubs$!: Subscription;
   constructor(private eventService: EventsService) {}
 
   ngOnInit(): void {
-    this.$eventSubs = this.eventService
+    this.eventSubs$ = this.eventService
       .receiveEvent()
       .subscribe((response: string) => {
         this.text = response;
@@ -20,6 +20,6 @@ export class EventInspectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.$eventSubs.unsubscribe();
+    this.eventSubs$.unsubscribe();
   }
 }

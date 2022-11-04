@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class CanvasComponent implements OnInit, OnDestroy {
   canvas!: fabric.Canvas;
-  $shapeSubs!: Subscription;
+  shapeSubs$!: Subscription;
   constructor(
     protected canvasService: CanvasShapesServiceService,
     protected eventService: EventsService
@@ -25,7 +25,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
     this.canvasService.canvas = this.canvas;
-    this.$shapeSubs = this.canvasService
+    this.shapeSubs$ = this.canvasService
       .drawShapeOnCanvas()
       .subscribe((response: any) => {
         this.canvas.add(response);
@@ -62,6 +62,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.$shapeSubs.unsubscribe();
+    this.shapeSubs$.unsubscribe();
   }
 }
