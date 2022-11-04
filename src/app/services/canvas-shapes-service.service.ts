@@ -14,7 +14,6 @@ export class CanvasShapesServiceService {
   constructor() {}
 
   drawRect() {
-    console.log('test22', this.canvas.width);
     this.shape = new fabric.Rect({
       left: (this.canvas.width as number) * Math.random(),
       top: (this.canvas.height as number) * Math.random(),
@@ -23,7 +22,7 @@ export class CanvasShapesServiceService {
       height: 50,
       stroke: '#000',
     });
-    this.subject.next({ shape: this.shape, name: 'Rectangle' });
+    this.subject.next(this.shape);
   }
 
   drawTriangle() {
@@ -35,7 +34,7 @@ export class CanvasShapesServiceService {
       fill: 'transparent',
       stroke: '#000',
     });
-    this.subject.next({ shape: this.shape, name: 'Triangle' });
+    this.subject.next(this.shape);
   }
 
   drawCircle() {
@@ -46,10 +45,10 @@ export class CanvasShapesServiceService {
       fill: 'transparent',
       stroke: '#000',
     });
-    this.subject.next({ shape: this.shape, name: 'Circle' });
+    this.subject.next(this.shape);
   }
 
-  drawShapeOnCanvas(): Observable<object> {
+  drawShapeOnCanvas(): Observable<Object> {
     return this.subject.asObservable();
   }
 }
