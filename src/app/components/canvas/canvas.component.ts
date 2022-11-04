@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./canvas.component.css'],
 })
 export class CanvasComponent implements OnInit, OnDestroy {
-  canvas!: any;
+  canvas!: fabric.Canvas;
   $shapeSubs!: Subscription;
   constructor(
     protected canvasService: CanvasShapesServiceService,
@@ -31,47 +31,25 @@ export class CanvasComponent implements OnInit, OnDestroy {
         this.canvas.add(response.shape);
       });
 
-    var addHandler = (options: Event) => {
+    this.canvas.on('object:added', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Added',
-          (options.target as HTMLTextAreaElement).type
-        );
+        this.eventService.sendEvent('Added', options.target.type!);
       }
-    };
-
-    var scaleHandler = (options: Event) => {
+    });
+    this.canvas.on('object:moving', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Scaled',
-          (options.target as HTMLTextAreaElement).type
-        );
+        this.eventService.sendEvent('Translated', options.target.type!);
       }
-    };
-
-    var moveHandler = (options: Event) => {
+    });
+    this.canvas.on('object:rotating', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Translated',
-          (options.target as HTMLTextAreaElement).type
-        );
+        this.eventService.sendEvent('Rotated', options.target.type!);
       }
-    };
-
-    var rotateHandler = (options: Event) => {
+    });
+    this.canvas.on('object:scaling', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Rotated',
-          (options.target as HTMLTextAreaElement).type
-        );
+        this.eventService.sendEvent('Scaled', options.target.type!);
       }
-    };
-
-    this.canvas.on({
-      'object:added': addHandler,
-      'object:scaling': scaleHandler,
-      'object:moving': moveHandler,
-      'object:rotating': rotateHandler,
     });
   }
   ngOnDestroy(): void {

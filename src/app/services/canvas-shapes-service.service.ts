@@ -6,17 +6,18 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CanvasShapesServiceService {
-  public shape: object = {};
-  public canvas :any;
+  public shape!: fabric.Object;
+  public canvas!: fabric.Canvas;
 
   subject = new Subject<Object>();
 
   constructor() {}
 
   drawRect() {
+    console.log('test22', this.canvas.width);
     this.shape = new fabric.Rect({
-      left: this.canvas.width * Math.random(),
-      top: this.canvas.height * Math.random(),
+      left: (this.canvas.width as number) * Math.random(),
+      top: (this.canvas.height as number) * Math.random(),
       fill: 'transparent',
       width: 50,
       height: 50,
@@ -27,8 +28,8 @@ export class CanvasShapesServiceService {
 
   drawTriangle() {
     this.shape = new fabric.Triangle({
-      left: this.canvas.width * Math.random(),
-      top: this.canvas.height * Math.random(),
+      left: (this.canvas.width as number) * Math.random(),
+      top: (this.canvas.height as number) * Math.random(),
       width: 100,
       height: 50,
       fill: 'transparent',
@@ -39,8 +40,8 @@ export class CanvasShapesServiceService {
 
   drawCircle() {
     this.shape = new fabric.Circle({
-      left: this.canvas.width * Math.random(),
-      top: this.canvas.height * Math.random(),
+      left: (this.canvas.width as number) * Math.random(),
+      top: (this.canvas.height as number) * Math.random(),
       radius: 50,
       fill: 'transparent',
       stroke: '#000',
