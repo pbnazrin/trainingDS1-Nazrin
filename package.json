@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@ngrx/store": "^12.5.1",
+    "@ngrx/store-devtools": "^12.5.1",
     "@types/fabric": "^4.5.12",
     "fabric": "^4.5.0",
     "prettier": "^2.7.1",

@@ -9,6 +9,9 @@ import { CanvasShapesServiceService } from 'src/app/services/canvas-shapes-servi
 import { fabric } from 'fabric';
 import { EventsService } from 'src/app/services/events.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { eventUpdate } from '../state/canvas.action';
+
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -19,8 +22,18 @@ export class CanvasComponent implements OnInit, OnDestroy {
   shapeSubs$!: Subscription;
   constructor(
     protected canvasService: CanvasShapesServiceService,
-    protected eventService: EventsService
+    protected eventService: EventsService,
+    protected store: Store<{ canvasEventStore: '' }>
   ) {}
+
+  updateCanvasState(eventName: string) {
+    this.store.dispatch(
+      eventUpdate({
+        eventState: JSON.stringify(this.canvas),
+        eventType: eventName,
+      })
+    );
+  }
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
@@ -34,30 +47,35 @@ export class CanvasComponent implements OnInit, OnDestroy {
     let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
     this.canvas.on('object:added', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Added ' + shapes[options.target.type as keyof typeof shapes]
-        );
+        var eventStr =
+          'Added ' + shapes[options.target.type as keyof typeof shapes];
+        this.eventService.sendEvent(eventStr);
+        //this.store.dispatch(onAdding());
+        this.updateCanvasState(eventStr);
       }
     });
     this.canvas.on('object:moving', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Translated ' + shapes[options.target.type as keyof typeof shapes]
-        );
+        var eventStr =
+          'Translated ' + shapes[options.target.type as keyof typeof shapes];
+        this.eventService.sendEvent(eventStr);
+        this.updateCanvasState(eventStr);
       }
     });
     this.canvas.on('object:rotating', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Rotated ' + shapes[options.target.type as keyof typeof shapes]
-        );
+        var eventStr =
+          'Rotated ' + shapes[options.target.type as keyof typeof shapes];
+        this.eventService.sendEvent(eventStr);
+        this.updateCanvasState(eventStr);
       }
     });
     this.canvas.on('object:scaling', (options) => {
       if (options.target) {
-        this.eventService.sendEvent(
-          'Scaled ' + shapes[options.target.type as keyof typeof shapes]
-        );
+        var eventStr =
+          'Scaled ' + shapes[options.target.type as keyof typeof shapes];
+        this.eventService.sendEvent(eventStr);
+        this.updateCanvasState(eventStr);
       }
     });
   }

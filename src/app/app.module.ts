@@ -16,7 +16,9 @@ import { EventInspectorComponent } from './components/event-inspector/event-insp
 import { PropertiesPanelComponent } from './components/properties-panel/properties-panel.component';
 
 import { HomePageComponent } from './pages/home-page/home-page.component';
-
+import { StoreModule } from '@ngrx/store';
+import { canvasReducer } from './components/state/canvas.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,6 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     PropertiesPanelComponent,
 
     HomePageComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -37,9 +38,12 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     MatButtonModule,
     MatDividerModule,
     MatSliderModule,
-
     AppRoutingModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({ canvasEventStore: canvasReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
