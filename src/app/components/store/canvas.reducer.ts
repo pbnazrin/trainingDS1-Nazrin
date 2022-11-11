@@ -1,11 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { eventUpdate } from './canvas.action';
 import { fabric } from 'fabric';
-
-export const initialState = {
-  eventState: JSON.stringify(fabric.Canvas),
-  eventType: '',
-};
+import { initialState } from './canvas.state';
 
 export const canvasReducer = createReducer(
   initialState,

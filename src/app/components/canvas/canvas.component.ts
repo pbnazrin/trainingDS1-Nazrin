@@ -10,7 +10,7 @@ import { fabric } from 'fabric';
 import { EventsService } from 'src/app/services/events.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { eventUpdate } from '../state/canvas.action';
+import { eventUpdate } from '../store/canvas.action';
 
 @Component({
   selector: 'app-canvas',
