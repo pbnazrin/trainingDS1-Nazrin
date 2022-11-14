@@ -17,7 +17,7 @@ import { PropertiesPanelComponent } from './components/properties-panel/properti
 
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { StoreModule } from '@ngrx/store';
-import { canvasReducer } from './components/store/canvas.reducer';
+import { canvasReducer } from './store/canvas.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({

@@ -10,7 +10,7 @@ import { fabric } from 'fabric';
 import { EventsService } from 'src/app/services/events.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { eventUpdate } from '../store/canvas.action';
+import { eventUpdate } from '../../store/canvas.action';
 
 @Component({
   selector: 'app-canvas',
@@ -29,7 +29,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
   updateCanvasState(eventName: string) {
     this.store.dispatch(
       eventUpdate({
-        eventState: JSON.stringify(this.canvas),
+        canvasState: JSON.stringify(this.canvas),
         eventType: eventName,
       })
     );
@@ -50,7 +50,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
         var eventStr =
           'Added ' + shapes[options.target.type as keyof typeof shapes];
         this.eventService.sendEvent(eventStr);
-        //this.store.dispatch(onAdding());
         this.updateCanvasState(eventStr);
       }
     });
@@ -59,7 +58,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
         var eventStr =
           'Translated ' + shapes[options.target.type as keyof typeof shapes];
         this.eventService.sendEvent(eventStr);
-        this.updateCanvasState(eventStr);
       }
     });
     this.canvas.on('object:rotating', (options) => {
@@ -67,7 +65,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
         var eventStr =
           'Rotated ' + shapes[options.target.type as keyof typeof shapes];
         this.eventService.sendEvent(eventStr);
-        this.updateCanvasState(eventStr);
       }
     });
     this.canvas.on('object:scaling', (options) => {
@@ -75,6 +72,13 @@ export class CanvasComponent implements OnInit, OnDestroy {
         var eventStr =
           'Scaled ' + shapes[options.target.type as keyof typeof shapes];
         this.eventService.sendEvent(eventStr);
+      }
+    });
+
+    this.canvas.on('object:modified', (options) => {
+      if (options.target) {
+        var eventStr =
+          'Modified ' + shapes[options.target.type as keyof typeof shapes];
         this.updateCanvasState(eventStr);
       }
     });
