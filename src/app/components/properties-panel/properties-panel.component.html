@@ -7,23 +7,20 @@
     max="5"
     step="0.5"
     #strokeWidth
+    [disabled]="isDisabled"
     [value]="objProperties.strokeWidth"
     (change)="updateStrokeWidth(strokeWidth.value)"
   ></mat-slider>
 
   <div>
     <label>Stroke</label>
-    <input
-      class="strokeTextContainer"
-      type="text"
-      [value]="objProperties.stroke"
-    />
     <span>
       <input
         class="strokeColorContainer"
         type="color"
         #strokeColor
         [value]="objProperties.stroke"
+        [disabled]="isDisabled"
         (change)="updateStrokeColor(strokeColor.value)"
       />
     </span>
@@ -33,12 +30,12 @@
 
   <div>
     <label>Fill</label>
-    <input class="fillTextContainer" type="text" [value]="objProperties.fill" />
     <span>
       <input
         class="fillColorContainer"
         type="color"
         #fill
+        [disabled]="isDisabled"
         [value]="objProperties.fill"
         (change)="updateFill(fill.value)"
       />
@@ -50,7 +47,14 @@
     ><input
       type="number"
       #angle
+      [disabled]="isDisabled"
       [value]="objProperties.angle"
       (change)="updateAngle(angle.value)"
   /></span>
+  <br />
+  <div *ngIf="this.isDisabled">
+    <h4>
+      {{ this.message }}
+    </h4>
+  </div>
 </div>

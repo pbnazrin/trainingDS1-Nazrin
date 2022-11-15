@@ -14,15 +14,26 @@ export class PropertiesPanelComponent implements OnInit {
     fill: '',
     angle: 0,
   };
+  isDisabled :boolean= false;
+  message:string='';
   constructor(private propertiesService: PropertiesService) {}
 
   ngOnInit(): void {
     this.propertiesService
       .setObjectProperties()
       .subscribe((response: IObjectModel) => {
-        console.log(response);
+        console.log('response', response);
+        this.isDisabled = false;
         this.populateObjectProperties(response);
       });
+    this.propertiesService.setDisabled().subscribe((response: boolean) => {
+      console.log('responsein props', response);
+      this.isDisabled = response;
+    });
+    this.propertiesService.setMessage().subscribe((msg: string) => {
+      console.log('responsein props', msg);
+      this.message = msg;
+    });
   }
 
   populateObjectProperties(response: IObjectModel) {

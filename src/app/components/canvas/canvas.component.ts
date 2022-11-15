@@ -40,8 +40,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
 
   getObjectProperties() {
     let objType = this.canvas.getActiveObject().get('type');
-    //console.log(objType);
-    //let fill = this.canvas.getActiveObject().get('fill');
 
     if (objType !== 'activeSelection') {
       let ObjProperties: IObjectModel = {
@@ -52,10 +50,13 @@ export class CanvasComponent implements OnInit, OnDestroy {
       };
       this.propertiesService.getObjectProperties(ObjProperties);
     } else {
+      this.propertiesService.getDisabled(true);
+      this.propertiesService.getMessage(
+        'Multiple objects are selected. No properties available for multiple objects'
+      );
     }
   }
   setObjectProperties(properties: IObjectModel) {
-    console.log('props', properties);
     this.canvas.getActiveObject().set('stroke', properties.stroke);
     this.canvas.getActiveObject().set('strokeWidth', properties.strokeWidth);
     this.canvas.getActiveObject().set('fill', properties.fill);
@@ -123,6 +124,11 @@ export class CanvasComponent implements OnInit, OnDestroy {
         this.updateCanvasState(eventStr);
         this.getObjectProperties();
       }
+    });
+    this.canvas.on('selection:cleared', (options) => {
+      console.log('no selection', options);
+      this.propertiesService.getDisabled(true);
+      this.propertiesService.getMessage('No object selected');
     });
   }
   ngOnDestroy(): void {
