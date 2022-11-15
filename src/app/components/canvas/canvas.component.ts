@@ -11,7 +11,8 @@ import { EventsService } from 'src/app/services/events.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { eventUpdate } from '../../store/canvas.action';
-
+import { IObjectModel } from 'src/app/models/object.model';
+import { PropertiesService } from 'src/app/services/properties.service';
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -20,10 +21,12 @@ import { eventUpdate } from '../../store/canvas.action';
 export class CanvasComponent implements OnInit, OnDestroy {
   canvas!: fabric.Canvas;
   shapeSubs$!: Subscription;
+  propSubs$!: Subscription;
   constructor(
     protected canvasService: CanvasShapesServiceService,
     protected eventService: EventsService,
-    protected store: Store<{ canvasEventStore: '' }>
+    protected store: Store<{ canvasEventStore: '' }>,
+    protected propertiesService: PropertiesService
   ) {}
 
   updateCanvasState(eventName: string) {
@@ -35,6 +38,31 @@ export class CanvasComponent implements OnInit, OnDestroy {
     );
   }
 
+  getObjectProperties() {
+    let objType = this.canvas.getActiveObject().get('type');
+    //console.log(objType);
+    //let fill = this.canvas.getActiveObject().get('fill');
+
+    if (objType !== 'activeSelection') {
+      let ObjProperties: IObjectModel = {
+        stroke: this.canvas.getActiveObject().get('stroke') as string,
+        strokeWidth: this.canvas.getActiveObject().get('strokeWidth') as number,
+        fill: this.canvas.getActiveObject().get('fill') as string,
+        angle: this.canvas.getActiveObject().get('angle') as number,
+      };
+      this.propertiesService.getObjectProperties(ObjProperties);
+    } else {
+    }
+  }
+  setObjectProperties(properties: IObjectModel) {
+    console.log('props', properties);
+    this.canvas.getActiveObject().set('stroke', properties.stroke);
+    this.canvas.getActiveObject().set('strokeWidth', properties.strokeWidth);
+    this.canvas.getActiveObject().set('fill', properties.fill);
+    this.canvas.getActiveObject().set('angle', properties.angle);
+    this.canvas.renderAll();
+  }
+
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
     this.canvasService.canvas = this.canvas;
@@ -43,7 +71,11 @@ export class CanvasComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         this.canvas.add(response);
       });
-
+    this.propSubs$ = this.propertiesService
+      .setObjectProperties()
+      .subscribe((response) => {
+        this.setObjectProperties(response);
+      });
     let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
     this.canvas.on('object:added', (options) => {
       if (options.target) {
@@ -80,6 +112,16 @@ export class CanvasComponent implements OnInit, OnDestroy {
         var eventStr =
           'Modified ' + shapes[options.target.type as keyof typeof shapes];
         this.updateCanvasState(eventStr);
+      }
+    });
+
+    this.canvas.on('selection:created', (options) => {
+      if (options.target) {
+        var eventStr =
+          'Selected ' + shapes[options.target.type as keyof typeof shapes];
+        //this.eventService.sendEvent(eventStr);
+        this.updateCanvasState(eventStr);
+        this.getObjectProperties();
       }
     });
   }

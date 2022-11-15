@@ -1,4 +1,3 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { Subject, Observable } from 'rxjs';
@@ -9,7 +8,7 @@ export class CanvasShapesServiceService {
   public shape!: fabric.Object;
   public canvas!: fabric.Canvas;
 
-  subject = new Subject<Object>();
+  subject = new Subject<fabric.Object>();
 
   constructor() {}
 
@@ -17,10 +16,11 @@ export class CanvasShapesServiceService {
     this.shape = new fabric.Rect({
       left: (this.canvas.width as number) * Math.random(),
       top: (this.canvas.height as number) * Math.random(),
-      fill: 'transparent',
+      fill: '#ffffff',
       width: 50,
       height: 50,
-      stroke: '#000',
+      stroke: '#00ff00',
+      strokeWidth: 5,
     });
     this.subject.next(this.shape);
   }
@@ -31,8 +31,8 @@ export class CanvasShapesServiceService {
       top: (this.canvas.height as number) * Math.random(),
       width: 100,
       height: 50,
-      fill: 'transparent',
-      stroke: '#000',
+      fill: '#ffffff',
+      stroke: '#000000',
     });
     this.subject.next(this.shape);
   }
@@ -42,8 +42,8 @@ export class CanvasShapesServiceService {
       left: (this.canvas.width as number) * Math.random(),
       top: (this.canvas.height as number) * Math.random(),
       radius: 50,
-      fill: 'transparent',
-      stroke: '#000',
+      fill: '#ffffff',
+      stroke: '#000000',
     });
     this.subject.next(this.shape);
   }
