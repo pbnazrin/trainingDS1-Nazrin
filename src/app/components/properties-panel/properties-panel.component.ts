@@ -26,7 +26,7 @@ export class PropertiesPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.propertiesService.getObjectProperties();
+    this.propertiesService.getObjectPropertiesFromcanvas();
 
     this.propertiesService.setDisabled().subscribe((response: boolean) => {
       this.isDisabled = response;
@@ -43,8 +43,11 @@ export class PropertiesPanelComponent implements OnInit {
       (this.objProperties.angle = response.angle);
   }
 
-  setProperties() {
+  setProperties(propertyName: string) {
     if (!this.isDisabled)
-      this.propertiesService.setObjectProperties(this.objProperties);
+      this.propertiesService.setObjectProperties(
+        this.objProperties,
+        propertyName
+      );
   }
 }

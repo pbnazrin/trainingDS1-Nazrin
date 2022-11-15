@@ -10,7 +10,7 @@
       #strokeWidth
       [disabled]="isDisabled"
       [(ngModel)]="objProperties.strokeWidth"
-      (change)="setProperties()"
+      (change)="setProperties('strokeWidth')"
     ></mat-slider>
   </div>
 
@@ -23,7 +23,7 @@
         #strokeColor
         [(ngModel)]="objProperties.stroke"
         [disabled]="isDisabled"
-        (change)="setProperties()"
+        (change)="setProperties('stroke')"
       />
     </span>
   </div>
@@ -39,7 +39,7 @@
         #fill
         [disabled]="isDisabled"
         [(ngModel)]="objProperties.fill"
-        (change)="setProperties()"
+        (change)="setProperties('fill')"
       />
     </span>
   </div>
@@ -51,7 +51,7 @@
       #angle
       [disabled]="isDisabled"
       [(ngModel)]="objProperties.angle"
-      (change)="setProperties()"
+      (change)="setProperties('angle')"
   /></span>
   <br />
   <div *ngIf="this.isDisabled">

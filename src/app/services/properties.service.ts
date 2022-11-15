@@ -6,30 +6,35 @@ import { Subject, Observable } from 'rxjs';
 })
 export class PropertiesService {
   public canvas!: fabric.Canvas;
-
+  public ObjProperties!: IObjectModel;
   objectProperties$ = new Subject<IObjectModel>();
   disabled$ = new Subject<boolean>();
   message$ = new Subject<string>();
   constructor() {}
 
   getProperties() {
-    let ObjProperties: IObjectModel = {
+    this.ObjProperties = {
       stroke: this.canvas.getActiveObject().get('stroke') as string,
       strokeWidth: this.canvas.getActiveObject().get('strokeWidth') as number,
       fill: this.canvas.getActiveObject().get('fill') as string,
       angle: this.canvas.getActiveObject().get('angle') as number,
     };
-    this.objectProperties$.next(ObjProperties);
+    this.objectProperties$.next(this.ObjProperties);
   }
-  setObjectProperties(properties: IObjectModel) {
-    this.canvas.getActiveObject().set('stroke', properties.stroke);
-    this.canvas.getActiveObject().set('strokeWidth', properties.strokeWidth);
-    this.canvas.getActiveObject().set('fill', properties.fill);
-    this.canvas.getActiveObject().set('angle', properties.angle);
+  setObjectProperties(properties: IObjectModel, propertyName: string) {
+    if (propertyName == 'stroke') {
+      console.log('stroke');
+      this.canvas.getActiveObject().set('stroke', properties.stroke);
+    } else if (propertyName == 'strokeWidth')
+      this.canvas.getActiveObject().set('strokeWidth', properties.strokeWidth);
+    else if (propertyName == 'fill')
+      this.canvas.getActiveObject().set('fill', properties.fill);
+    else this.canvas.getActiveObject().set('angle', properties.angle);
+
     this.canvas.renderAll();
   }
 
-  getObjectProperties() {
+  getObjectPropertiesFromcanvas() {
     this.canvas.on('selection:created', (options) => {
       let objType = this.canvas.getActiveObject().get('type');
       if (objType !== 'activeSelection') {
@@ -42,6 +47,15 @@ export class PropertiesService {
         this.disabled$.next(true);
       }
     });
+
+    this.canvas.on('selection:updated', (options) => {
+      this.getProperties();
+    });
+
+    this.canvas.on('object:modified', (options) => {
+      this.getProperties();
+    });
+
     this.canvas.on('selection:cleared', (options) => {
       this.message$.next('No object selected');
       this.disabled$.next(true);
