@@ -14,24 +14,24 @@ export class PropertiesPanelComponent implements OnInit {
     fill: '',
     angle: 0,
   };
-  isDisabled :boolean= false;
-  message:string='';
-  constructor(private propertiesService: PropertiesService) {}
+  isDisabled: boolean = false;
+  message: string = '';
 
-  ngOnInit(): void {
+  constructor(private propertiesService: PropertiesService) {
     this.propertiesService
-      .setObjectProperties()
+      .getObjectPropertiesOnPanel()
       .subscribe((response: IObjectModel) => {
-        console.log('response', response);
-        this.isDisabled = false;
         this.populateObjectProperties(response);
       });
+  }
+
+  ngOnInit(): void {
+    this.propertiesService.getObjectProperties();
+
     this.propertiesService.setDisabled().subscribe((response: boolean) => {
-      console.log('responsein props', response);
       this.isDisabled = response;
     });
     this.propertiesService.setMessage().subscribe((msg: string) => {
-      console.log('responsein props', msg);
       this.message = msg;
     });
   }
@@ -43,21 +43,8 @@ export class PropertiesPanelComponent implements OnInit {
       (this.objProperties.angle = response.angle);
   }
 
-  updateStrokeWidth(strokeWidth: number) {
-    this.objProperties.strokeWidth = strokeWidth;
-    this.propertiesService.getObjectProperties(this.objProperties);
-  }
-  updateStrokeColor(stroke: string) {
-    console.log('color', stroke);
-    this.objProperties.stroke = stroke;
-    this.propertiesService.getObjectProperties(this.objProperties);
-  }
-  updateFill(fill: string) {
-    this.objProperties.fill = fill;
-    this.propertiesService.getObjectProperties(this.objProperties);
-  }
-  updateAngle(angle: string) {
-    this.objProperties.angle = Number(angle);
-    this.propertiesService.getObjectProperties(this.objProperties);
+  setProperties() {
+    if (!this.isDisabled)
+      this.propertiesService.setObjectProperties(this.objProperties);
   }
 }

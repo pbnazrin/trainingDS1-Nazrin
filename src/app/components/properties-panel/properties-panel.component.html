@@ -1,16 +1,18 @@
 <div class="properties-container">
   <p class="properties-header">Properties Panel</p>
-  <label>Stroke Width</label>
-  <mat-slider
-    aria-label="units"
-    min="1"
-    max="5"
-    step="0.5"
-    #strokeWidth
-    [disabled]="isDisabled"
-    [value]="objProperties.strokeWidth"
-    (change)="updateStrokeWidth(strokeWidth.value)"
-  ></mat-slider>
+  <div>
+    <label>Stroke Width</label>
+    <mat-slider
+      aria-label="units"
+      min="1"
+      max="5"
+      step="0.5"
+      #strokeWidth
+      [disabled]="isDisabled"
+      [(ngModel)]="objProperties.strokeWidth"
+      (change)="setProperties()"
+    ></mat-slider>
+  </div>
 
   <div>
     <label>Stroke</label>
@@ -19,9 +21,9 @@
         class="strokeColorContainer"
         type="color"
         #strokeColor
-        [value]="objProperties.stroke"
+        [(ngModel)]="objProperties.stroke"
         [disabled]="isDisabled"
-        (change)="updateStrokeColor(strokeColor.value)"
+        (change)="setProperties()"
       />
     </span>
   </div>
@@ -36,8 +38,8 @@
         type="color"
         #fill
         [disabled]="isDisabled"
-        [value]="objProperties.fill"
-        (change)="updateFill(fill.value)"
+        [(ngModel)]="objProperties.fill"
+        (change)="setProperties()"
       />
     </span>
   </div>
@@ -48,8 +50,8 @@
       type="number"
       #angle
       [disabled]="isDisabled"
-      [value]="objProperties.angle"
-      (change)="updateAngle(angle.value)"
+      [(ngModel)]="objProperties.angle"
+      (change)="setProperties()"
   /></span>
   <br />
   <div *ngIf="this.isDisabled">
