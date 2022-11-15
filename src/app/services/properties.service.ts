@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IObjectModel } from '../models/object.model';
 import { Subject, Observable } from 'rxjs';
+import { NgrxService } from './ngrx.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -10,7 +11,7 @@ export class PropertiesService {
   objectProperties$ = new Subject<IObjectModel>();
   disabled$ = new Subject<boolean>();
   message$ = new Subject<string>();
-  constructor() {}
+  constructor(private ngrxService:NgrxService) {}
 
   getProperties() {
     this.ObjProperties = {
@@ -32,6 +33,7 @@ export class PropertiesService {
     else this.canvas.getActiveObject().set('angle', properties.angle);
 
     this.canvas.renderAll();
+    this.ngrxService.updateCanvasState("properties panel updated");
   }
 
   getObjectPropertiesFromcanvas() {

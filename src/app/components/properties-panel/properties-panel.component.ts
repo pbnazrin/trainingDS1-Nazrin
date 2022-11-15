@@ -14,8 +14,8 @@ export class PropertiesPanelComponent implements OnInit {
     fill: '',
     angle: 0,
   };
-  isDisabled: boolean = false;
-  message: string = '';
+  isDisabled: boolean = true;
+  message: string = 'no object selected';
 
   constructor(private propertiesService: PropertiesService) {
     this.propertiesService
@@ -34,6 +34,7 @@ export class PropertiesPanelComponent implements OnInit {
     this.propertiesService.setMessage().subscribe((msg: string) => {
       this.message = msg;
     });
+    console.log("mess",this.isDisabled);
   }
 
   populateObjectProperties(response: IObjectModel) {
