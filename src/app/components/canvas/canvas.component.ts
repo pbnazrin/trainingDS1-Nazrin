@@ -40,8 +40,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
 
   getObjectProperties() {
     let objType = this.canvas.getActiveObject().get('type');
-    //console.log(objType);
-    //let fill = this.canvas.getActiveObject().get('fill');
 
     if (objType !== 'activeSelection') {
       let ObjProperties: IObjectModel = {
