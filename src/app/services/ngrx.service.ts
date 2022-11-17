@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
-import { eventUpdate } from '../store/canvas.action';
+import { CanvasUpdate, UndoCanvas } from '../store/canvas.action';
 import { Store } from '@ngrx/store';
+import { IState } from '../store/canvas.state';
 @Injectable({
   providedIn: 'root',
 })
 export class NgrxService {
   public canvas!: fabric.Canvas;
 
-  constructor(protected store: Store<{ canvasEventStore: '' }>) {}
+  constructor(protected store: Store<{ state: IState }>) {}
 
   updateCanvasState(eventName: string) {
     this.store.dispatch(
-      eventUpdate({
+      new CanvasUpdate({
         canvasState: JSON.stringify(this.canvas),
         eventType: eventName,
       })
     );
+  }
+
+  UndoCanvasState() {
+    this.store.dispatch(new UndoCanvas());
   }
 }

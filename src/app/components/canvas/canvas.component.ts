@@ -76,6 +76,10 @@ export class CanvasComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  UndoState(){
+    this.ngrxService.UndoCanvasState();
+  }
   ngOnDestroy(): void {
     this.shapeSubs$.unsubscribe();
   }
