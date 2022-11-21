@@ -4,8 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UndoRedoServiceService {
-  canvas!: string;
-
   eventStack: Array<string> = [JSON.stringify(' ')];
   redoStack: Array<string> = [];
 
@@ -17,15 +15,14 @@ export class UndoRedoServiceService {
     this.redoStack = [];
     this.undoEnable$.next(true);
     this.redoEnable$.next(false);
-    
   }
   undoState() {
-    if (this.eventStack.length == 1) {
-      this.undoEnable$.next(false);
-    }
     this.redoEnable$.next(true);
     let poppedState = this.eventStack.pop() as string;
     this.redoStack.push(poppedState);
+    if (this.eventStack.length == 1) {
+      this.undoEnable$.next(false);
+    }
     return this.eventStack[this.eventStack.length - 1];
   }
   redoState() {

@@ -17,7 +17,7 @@ export class UndoCanvas implements Action {
   public readonly type = ActionTypes.UndoCanvas;
   constructor(
     public payload: IState = {
-      canvasState: JSON.stringify(fabric.Canvas),
+      canvasState: 'string',
       eventType: 'Undo Canvas',
       undoEnabled: true,
     }

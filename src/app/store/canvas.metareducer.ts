@@ -1,12 +1,5 @@
-import {
-  StoreModule,
-  ActionReducer,
-  MetaReducer,
-  META_REDUCERS,
-} from '@ngrx/store';
+import { ActionReducer, MetaReducer } from '@ngrx/store';
 import { UndoRedoServiceService } from '../services/undo-redo-service.service';
-import { Action } from '@ngrx/store';
-import { IState } from './canvas.state';
 import { ActionTypes, canvasActions } from './canvas.action';
 import { AppState } from './canvas.index';
 import { modifiedStateAction } from './canvas.action';

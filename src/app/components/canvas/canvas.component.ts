@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { PropertiesService } from 'src/app/services/properties.service';
 import { NgrxService } from 'src/app/services/ngrx.service';
-import { Subject, Observable } from 'rxjs';
 import { IState } from 'src/app/store/canvas.state';
 import { undoCanvasSelector } from 'src/app/store/canvas.selector';
 import { getCanvas } from 'src/app/store/canvas.selector';
@@ -18,8 +17,8 @@ import { UndoRedoServiceService } from 'src/app/services/undo-redo-service.servi
 })
 export class CanvasComponent implements OnInit, OnDestroy {
   canvas!: fabric.Canvas;
-  undoEnable:boolean=false;
-  redoEnable:boolean=false;
+  undoEnable: boolean = false;
+  redoEnable: boolean = false;
   shapeSubs$!: Subscription;
   propSubs$!: Subscription;
   getCanvas$ = this.store.pipe(select(getCanvas));
@@ -39,19 +38,17 @@ export class CanvasComponent implements OnInit, OnDestroy {
       }
     });
     this.getCanvas$.subscribe((data) => {});
-    this.undoRedoservice.undoEnable().subscribe((data)=>{
+    this.undoRedoservice.undoEnable().subscribe((data) => {
       this.undoEnable = data;
-    })
-    this.undoRedoservice.redoEnable().subscribe((data)=>{
+    });
+    this.undoRedoservice.redoEnable().subscribe((data) => {
       this.redoEnable = data;
-    })
-
-
+    });
   }
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
-    this.undoRedoservice.canvas = JSON.stringify(this.canvas);
+
     this.canvasService.canvas = this.canvas;
     this.propertiesService.canvas = this.canvas;
     this.ngrxService.canvas = this.canvas;
@@ -105,11 +102,13 @@ export class CanvasComponent implements OnInit, OnDestroy {
   }
 
   UndoState() {
-    this.ngrxService.UndoCanvasState();
+    if(this.undoEnable)
+      this.ngrxService.UndoCanvasState();
   }
 
   RedoState() {
-    this.ngrxService.RedoCanvasState();
+    if(this.redoEnable)
+      this.ngrxService.RedoCanvasState();
   }
   ngOnDestroy(): void {
     this.shapeSubs$.unsubscribe();
