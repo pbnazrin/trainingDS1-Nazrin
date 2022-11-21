@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CanvasComponent } from '../canvas/canvas.component';
 import { CanvasShapesServiceService } from 'src/app/services/canvas-shapes-service.service';
 
 @Component({

@@ -68,7 +68,6 @@ export class PropertiesService {
     return this.objectProperties$.asObservable();
   }
   getDisabled(isDisabled: boolean) {
-    console.log(isDisabled);
     this.disabled$.next(isDisabled);
   }
   setDisabled(): Observable<boolean> {

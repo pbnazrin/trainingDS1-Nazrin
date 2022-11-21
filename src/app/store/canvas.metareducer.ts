@@ -28,7 +28,7 @@ export function undoRedoMetaReducer(
           modifiedState = undoRedoService.undoState();
           break;
         case ActionTypes.RedoCanvas:
-          modifiedState = undoRedoService.redoState(action.payload.canvasState);
+          modifiedState = undoRedoService.redoState();
           break;
       }
 
