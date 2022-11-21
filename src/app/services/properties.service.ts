@@ -11,7 +11,7 @@ export class PropertiesService {
   objectProperties$ = new Subject<IObjectModel>();
   disabled$ = new Subject<boolean>();
   message$ = new Subject<string>();
-  constructor(private ngrxService:NgrxService) {}
+  constructor(private ngrxService: NgrxService) {}
 
   getProperties() {
     this.ObjProperties = {
@@ -33,7 +33,7 @@ export class PropertiesService {
     else this.canvas.getActiveObject().set('angle', properties.angle);
 
     this.canvas.renderAll();
-    this.ngrxService.updateCanvasState("properties panel updated");
+    this.ngrxService.updateCanvasState('properties panel updated');
   }
 
   getObjectPropertiesFromcanvas() {

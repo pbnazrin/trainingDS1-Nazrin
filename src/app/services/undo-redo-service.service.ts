@@ -1,16 +1,27 @@
 import { Injectable } from '@angular/core';
 import { IState } from '../store/canvas.state';
+import { fabric } from 'fabric';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UndoRedoServiceService {
-  eventStack: Array<IState> = [];
+  canvas!: string;
+
+  eventStack: Array<string> = [JSON.stringify(' ')];
+  redoStack: Array<string> = [];
   constructor() {}
-  storeState(state: IState) {
-    this.eventStack.push(state);
-    console.log('eventStack', this.eventStack);
+  storeState(newAction: string) {
+    this.eventStack.push(newAction);
   }
-  retrieveState() {
-    return this.eventStack.pop();
+  undoState() {
+    let poppedState = this.eventStack.pop() as string;
+    this.redoStack.push(poppedState);
+    return this.eventStack[this.eventStack.length - 1];
+  }
+  redoState(newAction: string) {
+    let popped = this.redoStack.pop();
+    this.eventStack.push(popped!);
+    return popped;
   }
 }

@@ -34,7 +34,6 @@ export class PropertiesPanelComponent implements OnInit {
     this.propertiesService.setMessage().subscribe((msg: string) => {
       this.message = msg;
     });
-    console.log("mess",this.isDisabled);
   }
 
   populateObjectProperties(response: IObjectModel) {
