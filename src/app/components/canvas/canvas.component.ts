@@ -18,6 +18,8 @@ import { UndoRedoServiceService } from 'src/app/services/undo-redo-service.servi
 })
 export class CanvasComponent implements OnInit, OnDestroy {
   canvas!: fabric.Canvas;
+  undoEnable:boolean=false;
+  redoEnable:boolean=false;
   shapeSubs$!: Subscription;
   propSubs$!: Subscription;
   getCanvas$ = this.store.pipe(select(getCanvas));
@@ -37,6 +39,14 @@ export class CanvasComponent implements OnInit, OnDestroy {
       }
     });
     this.getCanvas$.subscribe((data) => {});
+    this.undoRedoservice.undoEnable().subscribe((data)=>{
+      this.undoEnable = data;
+    })
+    this.undoRedoservice.redoEnable().subscribe((data)=>{
+      this.redoEnable = data;
+    })
+
+
   }
 
   ngOnInit() {
