@@ -17,7 +17,7 @@ export class UndoCanvas implements Action {
   public readonly type = ActionTypes.UndoCanvas;
   constructor(
     public payload: IState = {
-      canvasState: 'string',
+      canvasState: '',
       eventType: 'Undo Canvas',
       undoEnabled: true,
     }
@@ -27,7 +27,7 @@ export class RedoCanvas implements Action {
   public readonly type = ActionTypes.RedoCanvas;
   constructor(
     public payload: IState = {
-      canvasState: JSON.stringify(fabric.Canvas),
+      canvasState: '',
       eventType: 'Redo Canvas',
       undoEnabled: true,
     }
