@@ -19,7 +19,6 @@ export function undoRedoMetaReducer(
     return (state, action: canvasActions) => {
       let modifiedAction = action;
       let modifiedState;
-      let flag = 0;
       switch (action.type) {
         case ActionTypes.CanvasUpdate:
           undoRedoService.storeState(action.payload.canvasState);

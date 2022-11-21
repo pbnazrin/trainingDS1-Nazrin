@@ -16,9 +16,11 @@ export class UndoRedoServiceService {
     this.eventStack.push(newAction);
     this.redoStack = [];
     this.undoEnable$.next(true);
+    this.redoEnable$.next(false);
+    
   }
   undoState() {
-    if (this.eventStack.length == 2) {
+    if (this.eventStack.length == 1) {
       this.undoEnable$.next(false);
     }
     this.redoEnable$.next(true);
@@ -27,7 +29,7 @@ export class UndoRedoServiceService {
     return this.eventStack[this.eventStack.length - 1];
   }
   redoState() {
-    if (this.redoStack.length == 1 || this.redoStack.length == 0) {
+    if (this.redoStack.length == 1) {
       this.redoEnable$.next(false);
     }
     let popped = this.redoStack.pop();
