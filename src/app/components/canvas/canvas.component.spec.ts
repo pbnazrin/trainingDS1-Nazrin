@@ -3,14 +3,7 @@ import { fabric } from 'fabric';
 import { CanvasComponent } from './canvas.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { EventsService } from 'src/app/services/events.service';
-// import { select, Store } from '@ngrx/store';
-// import { PropertiesService } from 'src/app/services/properties.service';
-// import { NgrxService } from 'src/app/services/ngrx.service';
-// import { IState } from 'src/app/store/canvas.state';
-// import { undoCanvasSelector } from 'src/app/store/canvas.selector';
-// import { getCanvas } from 'src/app/store/canvas.selector';
-// import { UndoRedoServiceService } from 'src/app/services/undo-redo-service.service';
-// import { CanvasShapesServiceService } from 'src/app/services/canvas-shapes-service.service';
+
 describe('CanvasComponent', () => {
   let component: CanvasComponent;
   let fixture: ComponentFixture<CanvasComponent>;
@@ -58,7 +51,6 @@ describe('CanvasComponent', () => {
       action: 'rotate',
       target: component.canvas.getActiveObject(),
     };
-    //let eventSpy =jasmine.createSpyObj(eventService,['sendEvent'])
 
     component.canvas.fire('object:moving',modEvent);
     expect(eventSpy).toHaveBeenCalledWith("Translated Rectangle");

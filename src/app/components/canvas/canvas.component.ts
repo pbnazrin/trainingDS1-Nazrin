@@ -48,7 +48,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
-   this.eventService.sendEvent("hi");
     this.canvasService.canvas = this.canvas;
     this.propertiesService.canvas = this.canvas;
     this.ngrxService.canvas = this.canvas;
@@ -74,14 +73,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
         this.eventService.sendEvent(eventStr);
       }
     });
-    // this.canvas.on('object:modified', (options) => {
-    //   if (options.target) {
-    //     let eventStr =
-    //       'Rotated ' + shapes[options.target.type as keyof typeof shapes];
-    //      this.eventService.sendEvent(eventStr);
-    //     //this.eventService.sendEvent('Rotated Rectangle');
-    //   }
-    // });
+
     this.canvas.on('object:scaling', (options) => {
       if (options.target) {
         let eventStr =
