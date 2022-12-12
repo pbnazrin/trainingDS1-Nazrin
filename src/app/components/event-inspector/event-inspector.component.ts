@@ -12,7 +12,7 @@ export class EventInspectorComponent implements OnInit, OnDestroy {
   constructor(private eventService: EventsService) {}
 
   ngOnInit(): void {
-    this.eventSubs$ = this.eventService
+  this.eventSubs$=this.eventService
       .receiveEvent()
       .subscribe((response: string) => {
         this.text = response;

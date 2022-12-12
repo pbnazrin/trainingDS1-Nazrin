@@ -48,7 +48,6 @@ export class CanvasComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canvas = new fabric.Canvas('canvas', {});
-
     this.canvasService.canvas = this.canvas;
     this.propertiesService.canvas = this.canvas;
     this.ngrxService.canvas = this.canvas;
@@ -74,13 +73,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
         this.eventService.sendEvent(eventStr);
       }
     });
-    this.canvas.on('object:rotating', (options) => {
-      if (options.target) {
-        let eventStr =
-          'Rotated ' + shapes[options.target.type as keyof typeof shapes];
-        this.eventService.sendEvent(eventStr);
-      }
-    });
+
     this.canvas.on('object:scaling', (options) => {
       if (options.target) {
         let eventStr =
@@ -88,10 +81,17 @@ export class CanvasComponent implements OnInit, OnDestroy {
         this.eventService.sendEvent(eventStr);
       }
     });
-
+    this.canvas.on('selection:created', (options: any) => {
+      if (options.target) {
+        let eventStr =
+          options.action +
+          ' ' +
+          shapes[options.target.type as keyof typeof shapes];
+        this.ngrxService.updateCanvasState(eventStr);
+      }
+    });
     this.canvas.on('object:modified', (options: any) => {
       if (options.target) {
-        console.log(options);
         let eventStr =
           options.action +
           ' ' +
@@ -102,13 +102,11 @@ export class CanvasComponent implements OnInit, OnDestroy {
   }
 
   UndoState() {
-    if(this.undoEnable)
-      this.ngrxService.UndoCanvasState();
+    if (this.undoEnable) this.ngrxService.UndoCanvasState();
   }
 
   RedoState() {
-    if(this.redoEnable)
-      this.ngrxService.RedoCanvasState();
+    if (this.redoEnable) this.ngrxService.RedoCanvasState();
   }
   ngOnDestroy(): void {
     this.shapeSubs$.unsubscribe();

@@ -18,12 +18,12 @@ import { PropertiesPanelComponent } from './components/properties-panel/properti
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {undoRedoMetaReducer} from './store/canvas.metareducer'
+import { undoRedoMetaReducer } from './store/canvas.metareducer';
 import { UndoRedoServiceService } from './services/undo-redo-service.service';
-import {reducers}from './store/canvas.index'
+import { reducers } from './store/canvas.index';
 
+import { META_REDUCERS } from '@ngrx/store';
 
-import {META_REDUCERS } from '@ngrx/store';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +45,7 @@ import {META_REDUCERS } from '@ngrx/store';
     MatSliderModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot( reducers),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
@@ -53,12 +53,12 @@ import {META_REDUCERS } from '@ngrx/store';
   providers: [
     UndoRedoServiceService,
     {
-        provide: META_REDUCERS,
-        deps: [UndoRedoServiceService],
-        useFactory: undoRedoMetaReducer,
-        multi: true,
+      provide: META_REDUCERS,
+      deps: [UndoRedoServiceService],
+      useFactory: undoRedoMetaReducer,
+      multi: true,
     },
-],
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
